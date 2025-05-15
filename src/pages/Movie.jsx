@@ -7,6 +7,7 @@ import star from "../images/star.svg";
 import add from "../images/add.svg";
 import done from "../images/done.svg";
 import { UserContext } from "./Home";
+import { API_URL } from "../lib/utils";
 
 function Movie({ selected }) {
   const { id } = useParams();
@@ -74,7 +75,7 @@ function Movie({ selected }) {
 
     if (isLoggedIn) {
       try {
-        const res = await axios.post(`${process.env.REACT_APP_API}/api/addToList`, {
+        const res = await axios.post(`${API_URL}/api/addToList`, {
           user,
           tvShows: listType === "tvShows" ? updatedList : user.tvShows,
           movies: listType === "movies" ? updatedList : user.movies,

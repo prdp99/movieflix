@@ -9,7 +9,7 @@ import add from "../images/add.svg";
 import done from "../images/done.svg";
 
 import { UserContext } from "./Home";
-import { API_KEY } from "../lib/utils";
+import { API_KEY, API_URL } from "../lib/utils";
 
 function TVShow({ selected }) {
   const { id } = useParams();
@@ -69,7 +69,7 @@ function TVShow({ selected }) {
 
     if (isLoggedIn) {
       try {
-        const res = await axios.post(`${process.env.REACT_APP_API}/api/addToList`, {
+        const res = await axios.post(`${API_URL}/api/addToList`, {
           user,
           tvShows: updatedTVShows,
           movies: user.movies,

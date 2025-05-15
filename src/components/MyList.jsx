@@ -14,7 +14,7 @@ function MyList(props) {
   const getData = () => {
     return user.movies.map((data, index) => {
       return (
-        <Link to={`/home/movies/${data.title}`} key={index}>
+        <Link to={`/home/movies/${data.id}`} key={index}>
           <li key={data.id} onClick={() => props.onSelect(data)}>
             <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
             {/* <span>{data.title}</span> */}
@@ -27,7 +27,7 @@ function MyList(props) {
   function getTvData() {
     return user.tvShows.map((data, index) => {
       return (
-        <Link to={`/home/tvshows/${data.name}`} key={index}>
+        <Link to={`/home/tvshows/${data.id}`} key={index}>
           <li key={data.id} onClick={() => props.onSelect(data)}>
             <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
             {/* <span>{data.name}</span> */}

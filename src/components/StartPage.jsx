@@ -20,7 +20,7 @@ function StartPage() {
     navigate("/home", { replace: true });
     // async function sendRequest() {
     //   const res = await axios.post(
-    //     `${process.env.REACT_APP_API}/api/login`,
+    //     `${API_URL}/api/login`,
     //     guest
     //   );
     //   const data = await res.data;
@@ -40,15 +40,15 @@ function StartPage() {
           </li>
           <li>
             <div className={classes.btnWrapper}>
-              <button
+              {/* <button
                 className={classes.sign_in_button}
                 onClick={navigateToLogin}
               >
                 Sign in
-              </button>
-              <span className={classes.or}>OR</span>
+              </button> */}
+              {/* <span className={classes.or}>OR</span> */}
               <button className={classes.demo} onClick={handleDemo}>
-                Demo
+                Sign in
               </button>
             </div>
           </li>

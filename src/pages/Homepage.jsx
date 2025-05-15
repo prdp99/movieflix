@@ -19,7 +19,7 @@ import Movie from "./Movie";
 import TVShow from "./TVShow";
 
 import { authActions } from "../store";
-import { API_KEY } from "../lib/utils";
+import { API_KEY, API_URL } from "../lib/utils";
 
 axios.defaults.withCredentials = true;
 
@@ -76,7 +76,7 @@ function Homepage() {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API}`, null);
+      const res = await axios.post(`${API_URL}`, null);
       if (res.status === 200) {
         dispatch(authActions.logout());
       }

@@ -84,7 +84,7 @@ function Card(props) {
     navigate("/home", { replace: true });
     // async function sendRequest() {
     //   const res = await axios.post(
-    //     `${process.env.REACT_APP_API}/api/login`,
+    //     `${API_URL}/api/login`,
     //     guest
     //   );
     //   const data = await res.data;

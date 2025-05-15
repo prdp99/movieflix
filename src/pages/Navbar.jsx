@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { authActions } from "../store";
 import Welcome from "./Welcome";
+import { API_URL } from "../lib/utils";
 axios.defaults.withCredentials = true;
 function Navbar() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function Navbar() {
 
   const sendLogoutReq = async () => {
     const res = await axios.post(
-      `${process.env.REACT_APP_API}/api/logout`,
+      `${API_URL}/api/logout`,
       null,
       {
         withCredentials: true,

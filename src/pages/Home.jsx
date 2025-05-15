@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Homepage from "./Homepage";
 import { useSelector } from "react-redux";
+import { API_URL } from "../lib/utils";
 axios.defaults.withCredentials = true;
 let firstRender = true;
 
@@ -13,7 +14,7 @@ function Welcome() {
 
   const refreshToken = async () => {
     const res = await axios
-      .get(`${process.env.REACT_APP_API}/api/refresh`, {
+      .get(`${API_URL}/api/refresh`, {
         withCredentials: true,
       })
       .then((res) => {
