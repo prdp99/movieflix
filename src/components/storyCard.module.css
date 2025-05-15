@@ -1,0 +1,129 @@
+.card_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6.5rem;
+  min-height: 30rem;
+  width: 100%;
+  background: rgba(0, 0, 0);
+  color: white;
+  flex-wrap: wrap;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card_container.left {
+  flex-direction: row-reverse;
+}
+
+.card {
+  margin-top: -5rem;
+}
+
+.card_one {
+  display: flex;
+  flex-direction: column;
+  width: 49%;
+}
+
+.story_sub_title {
+  /* max-width: 34ch; */
+  font-size: 1.6rem;
+  font-weight: normal;
+  margin-top: -1rem;
+}
+.story_title {
+  font-size: 3rem;
+  line-height: 3rem;
+}
+.card_two {
+  position: relative;
+  width: 47%;
+  z-index: 0;
+  /* min-width: 20%; */
+}
+.story_video_image {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* position: relative; */
+  margin-top: -1rem;
+}
+.story_animation.story_sub_animation {
+  top: 0;
+  background: red;
+  height: 15rem;
+  width: 5rem;
+  z-index: 3;
+}
+.animation_card {
+  /* position: absolute; */
+  border: 2px solid rgb(105, 104, 104);
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  height: 6rem;
+  /* top: 17rem; */
+  /* left: 8.5rem; */
+  z-index: 4;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  align-items: center;
+  /* max-width: 2rem; */
+  gap: 1rem;
+  /* transform: translateY(-8rem) translateX(5rem); */
+  z-index: 1000;
+  margin-top: -4rem;
+}
+.animation_sub_title {
+  margin-top: -1rem;
+
+  color: hsl(240, 76%, 55%);
+}
+.sub_image {
+  height: 100%;
+  z-index: 4;
+}
+.download {
+  margin-left: 2rem;
+  width: 3.5rem;
+  height: 3.125rem;
+  background-color: blue;
+  border-radius: 50%;
+  background: url("https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/download-icon.gif");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.story_video {
+  width: 73%;
+  position: absolute;
+  top: 0;
+  transform: translate(18%, 27%);
+}
+
+.splitter {
+  width: 100%;
+  height: 0.4rem;
+  background-color: hsl(0, 5%, 16%);
+}
+
+@media screen and (max-width: 733px) {
+  .card_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .card_one {
+    /* transform: scale(0.7); */
+  }
+  .story_sub_title {
+    font-size: 0.3rem;
+  }
+  .card_two {
+    top: 5rem;
+    width: 18rem;
+  }
+}
