@@ -2,13 +2,16 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+
 import classes from "./homepage.module.css";
 import star from "../images/star.svg";
 import add from "../images/add.svg";
 import done from "../images/done.svg";
-import { UserContext } from "./Home";
 
-function Movie({ selected }) {
+import { UserContext } from "./Home";
+import { API_KEY } from "../lib/utils";
+
+function TVShow({ selected }) {
   const { id } = useParams();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const { user, setUser } = useContext(UserContext);
@@ -17,49 +20,41 @@ function Movie({ selected }) {
   const [bookmark, setBookmark] = useState(false);
 
   useEffect(() => {
-    const fetchMovie = async () => {
+    const fetchTV = async () => {
       try {
         const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=c43760b116205bbb91da23670afc0fba&language=en-US`
+          `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=en-US`
         );
-        const movieData = await res.json();
+        const tvData = await res.json();
         setData({
-          title: movieData.title,
-          date: movieData.release_date?.slice(0, 4) || "Unknown",
-          overview: movieData.overview,
-          rating: movieData.vote_average?.toFixed(1),
-          backdrop_path: `https://image.tmdb.org/t/p/original${movieData.backdrop_path}`,
+          title: tvData.name,
+          date: tvData.first_air_date?.slice(0, 4) || "Unknown",
+          overview: tvData.overview,
+          rating: tvData.vote_average?.toFixed(1),
+          backdrop_path: `https://image.tmdb.org/t/p/original${tvData.backdrop_path}`,
         });
       } catch (error) {
-        console.error("Failed to fetch movie data:", error);
+        console.error("Failed to fetch TV data:", error);
       }
     };
 
-    fetchMovie();
+    fetchTV();
   }, [id]);
 
-  const isMovie = Boolean(selected?.title);
-
   const handleClick = async () => {
-    const listType = isMovie ? "movies" : "tvShows";
-    const titleKey = isMovie ? "title" : "name";
+    const title = selected?.name;
 
-    const alreadyExists = user[listType].some(
-      (item) => item.title === selected?.[titleKey]
-    );
+    const exists = user.tvShows.some((show) => show.title === title);
+    let updatedTVShows;
 
-    let updatedList = [];
-
-    if (alreadyExists) {
-      updatedList = user[listType].filter(
-        (item) => item.title !== selected?.[titleKey]
-      );
+    if (exists) {
+      updatedTVShows = user.tvShows.filter((show) => show.title !== title);
       setBookmark(false);
     } else {
-      updatedList = [
-        ...user[listType],
+      updatedTVShows = [
+        ...user.tvShows,
         {
-          title: selected?.[titleKey],
+          title: selected?.name,
           id: selected?.id,
           poster_path: selected?.poster_path,
         },
@@ -69,15 +64,15 @@ function Movie({ selected }) {
 
     setUser((prev) => ({
       ...prev,
-      [listType]: updatedList,
+      tvShows: updatedTVShows,
     }));
 
     if (isLoggedIn) {
       try {
         const res = await axios.post(`${process.env.REACT_APP_API}/api/addToList`, {
           user,
-          tvShows: listType === "tvShows" ? updatedList : user.tvShows,
-          movies: listType === "movies" ? updatedList : user.movies,
+          tvShows: updatedTVShows,
+          movies: user.movies,
         });
 
         if (res.status === 201) setBookmark(true);
@@ -106,7 +101,7 @@ function Movie({ selected }) {
         </div>
         <div className={classes.dates}>
           <h2>{data.date}</h2>
-          <h2>{isMovie ? "Movie" : "TV Series"}</h2>
+          <h2>TV Series</h2>
           <button className={classes.add} onClick={handleClick}>
             <img src={bookmark ? done : add} alt="bookmark" />
             <p>My List</p>
@@ -119,4 +114,4 @@ function Movie({ selected }) {
   );
 }
 
-export default Movie;
+export default TVShow;

@@ -1,6 +1,7 @@
 import classes from "./homepage.module.css";
 import { Link, Routes, Route } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import { API_KEY } from "../lib/utils";
 
 function Movies(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,7 +10,6 @@ function Movies(props) {
   const [latest, setLatest] = useState([]);
   const [airingTv, setAiringTv] = useState([]);
   const [coverImage, setCoverImage] = useState([]);
-  const API_KEY = process.env.API_KEY;
   const image =
     "https://image.tmdb.org/t/p/original/wcKFYIiVDvRURrzglV9kGu7fpfY.jpg";
   useEffect(() => {
@@ -17,7 +17,7 @@ function Movies(props) {
       setIsLoading(true);
       try {
         const res = await fetch(
-          `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=2`
+          `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=2`
         );
         const data = await res.json();
         setTopRated(data.results);
@@ -27,7 +27,7 @@ function Movies(props) {
     }
     async function fetchPopular() {
       const res = await fetch(
-        "https://api.themoviedb.org/3/movie/popular?api_key=c43760b116205bbb91da23670afc0fba&language=en-US&page=2"
+        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=2`
       );
       const data = await res.json();
       setPopular(data.results);
@@ -35,7 +35,7 @@ function Movies(props) {
     }
     async function fetchLatest() {
       const res = await fetch(
-        "https://api.themoviedb.org/3/movie/now_playing?api_key=c43760b116205bbb91da23670afc0fba&language=en-US&page=2"
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=2`
       );
       const data = await res.json();
       setLatest(data.results);
@@ -43,7 +43,7 @@ function Movies(props) {
     }
     async function fetchAiringTv() {
       const res = await fetch(
-        "https://api.themoviedb.org/3/movie/now_playing?api_key=c43760b116205bbb91da23670afc0fba&language=en-US&page=1"
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
       );
       const data = await res.json();
       setAiringTv(data.results);
@@ -59,7 +59,7 @@ function Movies(props) {
   function getTopRated() {
     return topRated.map((data, index) => {
       return (
-        <Link to={`/home/movies/${data.title}`} key={index}>
+        <Link to={`/home/movies/${data.id}`} key={index}>
           <li key={data.id} onClick={() => props.onSelect(data)}>
             <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
             {/* <span>{data.title}</span> */}
@@ -71,7 +71,7 @@ function Movies(props) {
   function getPopular() {
     return popular.map((data, index) => {
       return (
-        <Link to={`/home/movies/${data.title}`} key={index}>
+        <Link to={`/home/movies/${data.id}`} key={index}>
           <li key={data.id} onClick={() => props.onSelect(data)}>
             <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
             {/* <span>{data.title}</span> */}
@@ -90,7 +90,7 @@ function Movies(props) {
   function getLatest() {
     return latest.map((data, index) => {
       return (
-        <Link to={`/home/movies/${data.title}`} key={index}>
+        <Link to={`/home/movies/${data.id}`} key={index}>
           <li key={data.id} onClick={() => props.onSelect(data)}>
             <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
             {/* <span>{data.title}</span> */}
@@ -102,7 +102,7 @@ function Movies(props) {
   function getAiringTv() {
     return airingTv.map((data, index) => {
       return (
-        <Link to={`/home/movies/${data.title}`} key={index}>
+        <Link to={`/home/movies/${data.id}`} key={index}>
           <li key={data.id} onClick={() => props.onSelect(data)}>
             <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
             {/* <span>{data.title}</span> */}
