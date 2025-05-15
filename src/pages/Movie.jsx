@@ -25,19 +25,27 @@ function Movie({ selected }) {
         );
         const movieData = await res.json();
         setData({
+          id: movieData.id,
           title: movieData.title,
           date: movieData.release_date?.slice(0, 4) || "Unknown",
           overview: movieData.overview,
           rating: movieData.vote_average?.toFixed(1),
           backdrop_path: `https://image.tmdb.org/t/p/original${movieData.backdrop_path}`,
+          poster_path: movieData?.poster_path
         });
       } catch (error) {
         console.error("Failed to fetch movie data:", error);
       }
     };
+    const checkBookmark = () => {
+      const exists = user?.movies?.find((movie) => movie.id === Number(id));
+      setBookmark(Boolean(exists));
+    };
+
+    checkBookmark()
 
     fetchMovie();
-  }, [id]);
+  }, [id, user, bookmark]);
 
   const isMovie = Boolean(selected?.title);
 
@@ -46,7 +54,7 @@ function Movie({ selected }) {
     const titleKey = isMovie ? "title" : "name";
 
     const alreadyExists = user[listType].some(
-      (item) => item.title === selected?.[titleKey]
+      (item) => item.id === Number(id)
     );
 
     let updatedList = [];
@@ -60,9 +68,9 @@ function Movie({ selected }) {
       updatedList = [
         ...user[listType],
         {
-          title: selected?.[titleKey],
-          id: selected?.id,
-          poster_path: selected?.poster_path,
+          title: data?.title,
+          id: data?.id,
+          poster_path: data?.poster_path,
         },
       ];
       setBookmark(true);

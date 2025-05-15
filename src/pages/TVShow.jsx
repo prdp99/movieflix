@@ -19,6 +19,8 @@ function TVShow({ selected }) {
   const [data, setData] = useState(null);
   const [bookmark, setBookmark] = useState(false);
 
+  console.log('user', user)
+
   useEffect(() => {
     const fetchTV = async () => {
       try {
@@ -27,45 +29,38 @@ function TVShow({ selected }) {
         );
         const tvData = await res.json();
         setData({
+          id: tvData.id,
           title: tvData.name,
           date: tvData.first_air_date?.slice(0, 4) || "Unknown",
           overview: tvData.overview,
           rating: tvData.vote_average?.toFixed(1),
           backdrop_path: `https://image.tmdb.org/t/p/original${tvData.backdrop_path}`,
+          poster_path: tvData?.poster_path
         });
       } catch (error) {
         console.error("Failed to fetch TV data:", error);
       }
     };
 
+    const checkBookmark = () => {
+      const exists = user?.tvShows?.find((show) => show.id === Number(id));
+      setBookmark(Boolean(exists));
+    };
+
+    checkBookmark()
     fetchTV();
-  }, [id]);
+  }, [id, bookmark, user]);
 
   const handleClick = async () => {
-    const title = selected?.name;
 
-    const exists = user.tvShows.some((show) => show.title === title);
-    let updatedTVShows;
-
-    if (exists) {
-      updatedTVShows = user.tvShows.filter((show) => show.title !== title);
-      setBookmark(false);
-    } else {
-      updatedTVShows = [
-        ...user.tvShows,
-        {
-          title: selected?.name,
-          id: selected?.id,
-          poster_path: selected?.poster_path,
-        },
-      ];
-      setBookmark(true);
-    }
+  
 
     setUser((prev) => ({
       ...prev,
-      tvShows: updatedTVShows,
-    }));
+      tvShows: [...prev.tvShows, data],
+    }))
+
+    setBookmark(true)
 
     if (isLoggedIn) {
       try {

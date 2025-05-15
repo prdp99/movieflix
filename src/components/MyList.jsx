@@ -54,10 +54,10 @@ function MyList(props) {
       <main className={classes.main}>
         <h2>Movies</h2>
         <>
-          {user.movies.length == 0 && (
+          {user?.movies?.length == 0 && (
             <h2 className={classes.empty}>No Items..</h2>
           )}
-          {user.movies.length > 12 && (
+          {user?.movies?.length > 12 && (
             <>
               <div
                 className={classes.slider}
@@ -73,7 +73,7 @@ function MyList(props) {
           )}
           <div className={classes.cardContainerNext}>
             <ul className={classes.cardNext} ref={refOne}>
-              {user.movies.length > 0 && getData()}
+              {user?.movies?.length > 0 && getData()}
             </ul>
           </div>
         </>
@@ -81,11 +81,11 @@ function MyList(props) {
       <main>
         <h2>TV Shows</h2>
         <>
-          {user.tvShows.length == 0 && (
+          {user?.tvShows?.length == 0 && (
             <h2 className={classes.empty}>No Items..</h2>
           )}
 
-          {user.tvShows.length > 12 && (
+          {user?.tvShows?.length > 12 && (
             <>
               <div
                 className={classes.slider}
@@ -101,7 +101,7 @@ function MyList(props) {
           )}
           <div className={classes.cardContainerNext}>
             <ul className={classes.cardNext} ref={refTwo}>
-              {user.tvShows.length > 0 && getTvData()}
+              {user?.tvShows?.length > 0 && getTvData()}
             </ul>
           </div>
         </>
